@@ -16,3 +16,15 @@
 [submodule "libs/nave"]
 	path = libs/nave
 	url = git://github.com/isaacs/nave.git
+[submodule "link/.vim/bundle/qtpy-vim"]
+	path = link/.vim/bundle/qtpy-vim
+	url = git://github.com/ameade/qtpy-vim.git
+[submodule "link/.vim/bundle/snipmate.vim"]
+	path = link/.vim/bundle/snipmate.vim
+	url = https://github.com/msanders/snipmate.vim.git
+[submodule "link/.vim/bundle/nerdtree"]
+	path = link/.vim/bundle/nerdtree
+	url = https://github.com/scrooloose/nerdtree.git
+[submodule "link/.vim/bundle/vcscommand"]
+	path = link/.vim/bundle/vcscommand
+	url = git://repo.or.cz/vcscommand
