@@ -1,13 +1,17 @@
 [user]
-  name = Ben Alman
-  email = EMAIL
+  name = Alex Meade
+  email = hatboy112@yahoo.com
 [core]
+  editor = vim
   autocrlf = input
   whitespace = fix,space-before-tab,tab-in-indent,trailing-space
   excludesfile = ~/.gitignore_global
 [apply]
   whitespace = fix
 [alias]
+  review = !sh `git rev-parse --show-toplevel`/tools/rfc.sh
+  #This deletes all branches that have been merged into the current branch
+  bc = !sh -c \"git branch --merged | grep -v \\\"\\*\\\" | xargs -n 1 git branch -d\"
   br = branch
   ci = commit
   co = checkout
@@ -18,10 +22,6 @@
   rb = rbranch
   rv = review
   st = status
-  ksdiff = difftool -y -t Kaleidoscope
-[branch "master"]
-  remote = origin
-  merge = refs/heads/master
 [color]
   ui = auto
 [color "branch"]
@@ -39,21 +39,3 @@
   untracked = cyan
 [merge]
   log = true
-[difftool "Kaleidoscope"]
-  cmd = ksdiff-wrapper git \"$LOCAL\" \"$REMOTE\"
-[rerere]
-  enabled = 1
-[url "git@github.com:"]
-  insteadOf = "gh:"
-  pushInsteadOf = "github:"
-  pushInsteadOf = "git://github.com/"
-[url "git://github.com/"]
-  insteadOf = "github:"
-[url "git@gist.github.com:"]
-  insteadOf = "gst:"
-  pushInsteadOf = "gist:"
-  pushInsteadOf = "git://gist.github.com/"
-[url "git://gist.github.com/"]
-  insteadOf = "gist:"
-[url "git@heroku.com:"]
-  insteadOf = "heroku:"

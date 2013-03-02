@@ -15,8 +15,9 @@ function src() {
 }
 
 # Run dotfiles script, then source.
-function dotfiles() {
-  ~/.dotfiles/bin/dotfiles "$@" && src
-}
+# NOTE(ameade): commented out so we don't update automatically
+# function dotfiles() {
+#  ~/.dotfiles/bin/dotfiles "$@" && src
+#}
 
 src

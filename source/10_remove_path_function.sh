@@ -1,4 +1,5 @@
 # From http://stackoverflow.com/questions/370047/#370255
+# This removes a path from the PATH variable and echos the result
 function path_remove() {
   IFS=:
   # convert it to an array
