@@ -1,10 +1,11 @@
 # Ubuntu-only stuff. Abort if not Ubuntu.
 [[ "$(cat /etc/issue 2> /dev/null)" =~ Ubuntu ]] || return 1
 
-# Update APT.
-e_header "Updating APT"
-sudo apt-get -qq update
+e_header "Skipping Updating APT"
 #NOTE(ameade): LOL I don't want to wait so long
+# Update APT.
+#e_header "Updating APT"
+#sudo apt-get -qq update
 #sudo apt-get -qq upgrade
 
 # Install APT packages.
