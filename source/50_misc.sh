@@ -1,4 +1,7 @@
-
+# some more ls aliases
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
