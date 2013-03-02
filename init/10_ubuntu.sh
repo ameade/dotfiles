@@ -15,6 +15,7 @@ packages=(
   tree sl id3tool
   nmap telnet
   htop
+  eatmydata
 )
 
 list=()
