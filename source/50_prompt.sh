@@ -100,8 +100,7 @@ function prompt_command() {
 
   prompt_getcolors
   # http://twitter.com/cowboy/status/150254030654939137
-  #NOTE(ameade): I don't like newlines each time
-  #PS1="\n"
+  PS1=""
   # svn: [repo:lastchanged]
   PS1="$PS1$(prompt_svn)"
   # git: [branch:flags]
