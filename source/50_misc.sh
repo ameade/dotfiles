@@ -1,3 +1,9 @@
+
+
+# check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
+shopt -s checkwinsize
+
 # Set the terminal's title bar.
 function titlebar() {
   echo -n $'\e]0;'"$*"$'\a'

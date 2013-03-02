@@ -5,6 +5,13 @@ shopt -s histreedit
 # History expansions will be verified before execution.
 shopt -s histverify
 
+# don't put duplicate lines in the history. See bash(1) for more options
+# ... or force ignoredups and ignorespace
+HISTCONTROL=ignoredups:ignorespace
+
+# append to the history file, don't overwrite it
+shopt -s histappend
+
 # Entries beginning with space aren't added into history, and duplicate
 # entries will be erased (leaving the most recent entry).
 export HISTCONTROL="ignorespace:erasedups"
