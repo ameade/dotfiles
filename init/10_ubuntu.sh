@@ -14,7 +14,7 @@ packages=(
   git-core
   tree sl id3tool
   nmap telnet
-  htop
+  htop tmux
   eatmydata
 )
 
