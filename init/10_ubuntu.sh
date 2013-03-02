@@ -4,7 +4,8 @@
 # Update APT.
 e_header "Updating APT"
 sudo apt-get -qq update
-sudo apt-get -qq upgrade
+#NOTE(ameade): LOL I don't want to wait so long
+#sudo apt-get -qq upgrade
 
 # Install APT packages.
 packages=(
@@ -27,13 +28,4 @@ if (( ${#list[@]} > 0 )); then
   for package in "${list[@]}"; do
     sudo apt-get -qq install "$package"
   done
-fi
-
-# Install Git Extras
-if [[ ! "$(type -P git-extras)" ]]; then
-  e_header "Installing Git Extras"
-  (
-    cd ~/.dotfiles/libs/git-extras &&
-    sudo make install
-  )
 fi
