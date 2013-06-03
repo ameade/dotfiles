@@ -89,9 +89,9 @@ map <F2> :NERDTreeToggle<CR>
 map <F3> :VCSBlame<CR>
 
 " run tests in openstack
-let g:qtpy_shell_command = "eatmydata ./run_tests.sh"
-let g:qtpy_use_abs_path = "false"
-let g:qtpy_class_delimiter = "."
+let g:qtpy_shell_command = "eatmydata tox -epy27 -- --tests "
+let g:qtpy_use_abs_path = "true"
+let g:qtpy_class_delimiter = ":"
 let g:qtpy_method_delimiter = "."
 au FileType python map <F8> :QTPY method verbose<CR>
 au FileType python map <F9> :QTPY session<CR>
