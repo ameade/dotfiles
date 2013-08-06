@@ -153,6 +153,12 @@ if [[ ! "$(type -P git)" ]]; then
     e_header "Installing Git"
     sudo apt-get -qq install git-core
   fi
+  # Fedora.
+  elif [[ "$(cat /etc/issue 2> /dev/null)" =~ Fedora ]]; then
+    # Git is fairly easy.
+    e_header "Installing Git"
+    sudo yum -y install git-core
+  fi
 fi
 
 # If Git isn't installed by now, something exploded. We gots to quit!
