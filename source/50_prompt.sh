@@ -101,6 +101,11 @@ function prompt_command() {
   prompt_getcolors
   # http://twitter.com/cowboy/status/150254030654939137
   PS1=""
+  # python virtual env
+  if [[ $VIRTUAL_ENV != "" ]]
+      then
+          PS1="(${VIRTUAL_ENV##*/})$PS1"
+  fi
   # svn: [repo:lastchanged]
   PS1="$PS1$(prompt_svn)"
   # git: [branch:flags]
