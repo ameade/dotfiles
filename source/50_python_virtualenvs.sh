@@ -1,5 +1,6 @@
 alias pip="pip-python"
 export WORKON_HOME=$HOME/virtualenvs
+export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python
 source /bin/virtualenvwrapper.sh
 
 #If virtualenv is not created
