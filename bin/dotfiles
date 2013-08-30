@@ -152,7 +152,6 @@ if [[ ! "$(type -P git)" ]]; then
     # Git is fairly easy.
     e_header "Installing Git"
     sudo apt-get -qq install git-core
-  fi
   # Fedora.
   elif [[ "$(cat /etc/issue 2> /dev/null)" =~ Fedora ]]; then
     # Git is fairly easy.
