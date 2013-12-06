@@ -89,7 +89,7 @@ map <F2> :NERDTreeToggle<CR>
 map <F3> :VCSBlame<CR>
 
 " run tests in openstack
-let g:qtpy_shell_command = "eatmydata nosetests --tests "
+let g:qtpy_shell_command = "./tools/with_venv.sh eatmydata nosetests --tests "
 let g:qtpy_use_abs_path = "true"
 let g:qtpy_class_delimiter = ":"
 let g:qtpy_method_delimiter = "."
