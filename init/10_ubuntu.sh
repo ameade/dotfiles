@@ -11,6 +11,7 @@ e_header "Skipping Updating APT"
 # Install APT packages.
 packages=(
   build-essential libssl-dev
+  cmake python-dev
   git-core
   tree sl id3tool
   nmap telnet

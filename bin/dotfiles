@@ -218,5 +218,8 @@ if [[ "$new_dotfiles_install" && -e "conf/firsttime_reminder.sh" ]]; then
   source "conf/firsttime_reminder.sh"
 fi
 
+# Update all submodules
+git submodule update --init --recursive
+
 # All done!
 e_header "All done!"

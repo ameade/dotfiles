@@ -28,3 +28,6 @@
 [submodule "link/.vim/bundle/vcscommand"]
 	path = link/.vim/bundle/vcscommand
 	url = git://repo.or.cz/vcscommand
+[submodule "link/.vim/bundle/YouCompleteMe"]
+	path = link/.vim/bundle/YouCompleteMe
+	url = https://github.com/Valloric/YouCompleteMe
