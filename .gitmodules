@@ -31,3 +31,6 @@
 [submodule "link/.vim/bundle/YouCompleteMe"]
 	path = link/.vim/bundle/YouCompleteMe
 	url = https://github.com/Valloric/YouCompleteMe
+[submodule "link/.vim/bundle/Jenkinsfile-vim-syntax"]
+	path = link/.vim/bundle/Jenkinsfile-vim-syntax
+	url = https://github.com/martinda/Jenkinsfile-vim-syntax
