@@ -1,3 +1,5 @@
 alias kt="kubectl -n trident"
 alias ks="kubectl -n kubesystem"
 alias k="kubectl"
+alias gt="cd ~/host/go/src/trident"
+alias gw="cd ~/host/go/src/whelk"
