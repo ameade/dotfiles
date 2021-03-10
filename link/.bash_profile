@@ -7,3 +7,4 @@ if [ -f '/Users/ameade/google-cloud-sdk/path.bash.inc' ]; then source '/Users/am
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/Users/ameade/google-cloud-sdk/completion.bash.inc' ]; then source '/Users/ameade/google-cloud-sdk/completion.bash.inc'; fi
+export PATH="/usr/local/opt/openjdk/bin:$PATH"
