@@ -36,6 +36,7 @@ dotfiles
    installed? It does nothing.
 3. Copies `copy/*` into `~/` (files you'll edit locally, like `.gitconfig`).
 4. Symlinks `link/*` into `~/` (edit these and you edit the repo).
+5. Symlinks `claude/*` into `~/.claude/`, file by file (see below).
 
 Anything in `~/` that would be overwritten is moved to `~/.dotfiles/backups/`.
 
@@ -49,6 +50,7 @@ Anything in `~/` that would be overwritten is moved to `~/.dotfiles/backups/`.
 | `link/`   | Symlinked into `~/` (`.bashrc`, `.bash_profile`, `.tmux.conf`, …)   |
 | `source/` | Sourced by `~/.bashrc` on every new shell (aliases, prompt, etc.)   |
 | `conf/`   | Config that just sits here; not auto-applied                        |
+| `claude/` | Claude Code config, symlinked file-by-file into `~/.claude/`        |
 
 ## Aliases & functions
 
@@ -60,6 +62,22 @@ is sourced automatically on a new shell. Re-source without opening a new shell:
 src          # re-source everything
 src 50_misc  # re-source one file (by name, no .sh)
 ```
+
+## Claude Code config
+
+Files under `claude/` are symlinked **individually** into `~/.claude/` — never
+the whole directory, because `~/.claude/` also holds runtime state (sessions,
+projects, caches) that must not live in the repo. Tracked:
+
+- `claude/settings.json` → `~/.claude/settings.json` — permissions (deny/ask/allow).
+- `claude/CLAUDE.md` → `~/.claude/CLAUDE.md` — global instructions for all projects.
+
+**Not tracked, intentionally:** `~/.claude.json` (OAuth account, history),
+`~/.claude/projects`, `sessions`, `telemetry`, and other runtime state.
+Machine-specific overrides go in `~/.claude/settings.local.json` (gitignored).
+
+Skills live in `~/.agents/skills/` and are managed by their own installer, so
+they're not vendored here.
 
 ## Secrets & machine-specific config
 

@@ -103,13 +103,30 @@ e_header "Linking files into home directory"
 for file in link/* link/.*; do
   base="$(basename "$file")"
   [[ "$base" == "." || "$base" == ".." ]] && continue
+  src="$DOTFILES_DIR/$file"   # absolute target so the link resolves from ~/
   dest="$HOME/$base"
   # Already the right symlink? Leave it.
-  [[ "$dest" -ef "$file" ]] && continue
+  [[ "$dest" -ef "$src" ]] && continue
   backup_file "$dest"
-  ln -sf "$file" "$dest"
+  ln -sf "$src" "$dest"
   e_success "Linked ~/$base"
 done
+
+# 4. claude: symlink tracked ~/.claude config file-by-file. We must NOT link the
+#    whole directory — it holds runtime state (sessions, projects, caches).
+if [[ -d claude ]]; then
+  e_header "Linking Claude config into ~/.claude"
+  while IFS= read -r -d '' file; do
+    rel="${file#claude/}"
+    src="$DOTFILES_DIR/$file"
+    dest="$HOME/.claude/$rel"
+    [[ "$dest" -ef "$src" ]] && continue
+    mkdir -p "$(dirname "$dest")"
+    backup_file "$dest"
+    ln -sf "$src" "$dest"
+    e_success "Linked ~/.claude/$rel"
+  done < <(find claude -type f -print0)
+fi
 
 if [[ "$backup" ]]; then
   echo -e "\nBacked up pre-existing files to ${backup_dir/#$HOME/\~}"

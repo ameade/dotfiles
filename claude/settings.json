@@ -1,0 +1,31 @@
+{
+  "permissions": {
+    "deny": [
+      "Bash(git push*)",
+
+      "Bash(npm publish*)", "Bash(yarn publish*)", "Bash(pnpm publish*)",
+      "Bash(twine*)", "Bash(gem push*)", "Bash(cargo publish*)",
+      "Bash(docker push*)",
+      "Bash(terraform apply*)", "Bash(terraform destroy*)",
+      "Bash(vercel deploy*)", "Bash(vercel --prod*)", "Bash(flyctl deploy*)",
+
+      "Bash(aws*)", "Bash(gcloud*)", "Bash(kubectl*)", "Bash(az *)", "Bash(helm*)",
+
+      "Read(.env)", "Read(.env.*)",
+      "Read(~/.ssh/**)", "Read(~/.aws/**)", "Read(~/.config/gcloud/**)",
+      "Read(~/.netrc)", "Read(~/.npmrc)", "Read(~/.docker/config.json)",
+      "Read(**/*.pem)", "Read(**/id_rsa*)", "Read(**/credentials.json)"
+    ],
+    "ask": [
+      "Bash(rm -rf*)",
+      "Bash(git reset --hard*)", "Bash(git clean*)",
+      "Bash(git branch -D*)", "Bash(git push --force*)",
+      "Bash(git rebase*)"
+    ],
+    "allow": [
+      "Bash(npm run *)", "Bash(npm test*)", "Bash(npm install)",
+      "Bash(pytest*)", "Bash(make *)",
+      "Bash(git add *)", "Bash(git commit *)", "Bash(git stash*)"
+    ]
+  }
+}
