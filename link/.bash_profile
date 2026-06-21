@@ -7,4 +7,5 @@ export PATH="/usr/local/opt/openssl@1.1/bin:$PATH"
 if [ -f '/Users/ameade/google-cloud-sdk/path.bash.inc' ]; then . '/Users/ameade/google-cloud-sdk/path.bash.inc'; fi
 
 # The next line enables shell command completion for gcloud.
-if [ -f '/Users/ameade/google-cloud-sdk/completion.bash.inc' ]; then . '/Users/ameade/google-cloud-sdk/completion.bash.inc'; fi
+if [ -f '/Users/ameade/google-cloud-sdk/completion.bash.inc' ]; then source '/Users/ameade/google-cloud-sdk/completion.bash.inc'; fi
+export PATH="/usr/local/opt/openjdk/bin:$PATH"

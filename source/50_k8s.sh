@@ -1,3 +1,6 @@
-alias k="kubectl "
-alias ks="kubectl --namespace kube-system "
 source <(kubectl completion bash)
+alias kt="kubectl -n trident"
+alias ks="kubectl -n kubesystem"
+alias k="kubectl"
+alias gt="cd ~/host/go/src/github.com/netapp/trident"
+alias gw="cd ~/host/go/src/whelk"
