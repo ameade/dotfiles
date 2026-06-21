@@ -21,3 +21,9 @@ function src() {
 #}
 
 src
+
+export PATH=~/Library/Python/2.7/bin:~/.local/bin:$PATH
+
+
+
+export CLAUDE_CODE_OAUTH_TOKEN="***REMOVED-LEAKED-TOKEN***"

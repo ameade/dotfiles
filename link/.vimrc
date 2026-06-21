@@ -17,7 +17,7 @@ set nocompatible
 
 set modeline
 
-set textwidth=80
+set textwidth=0
 
 set hidden
 
@@ -81,8 +81,8 @@ cmap jj <Esc>
 " PLUGIN SETTINGS
 
 " Pyflakes/SpellBad highlighting color set to gray
-highlight SpellBad term=standout ctermbg=0 ctermfg=1
-let g:pyflakes_use_quickfix = 0
+" highlight SpellBad term=standout ctermbg=0 ctermfg=1
+" let g:pyflakes_use_quickfix = 0
 
 " PLUGIN MAPPING
 map <F2> :NERDTreeToggle<CR>
@@ -97,3 +97,6 @@ au FileType python map <F8> :QTPY method verbose<CR>
 au FileType python map <F9> :QTPY session<CR>
 au FileType python map <silent><leader>m :QTPY method verbose<CR>
 au FileType python map <silent><leader>s :QTPY session<CR>
+if !empty($TERM_PROGRAM) && $TERM_PROGRAM == 'Apple_Terminal'
+  set t_SH=
+endif

@@ -1,8 +1,5 @@
-# My awesome bash prompt
 #
 # Copyright (c) 2012 "Cowboy" Ben Alman
-# Licensed under the MIT license.
-# http://benalman.com/about/license/
 #
 # Example:
 # [master:!?][cowboy@CowBook:~/.dotfiles]
@@ -58,9 +55,9 @@ function prompt_git() {
   [[ "$output" ]] || output="$(git branch | perl -ne '/^\* (.*)/ && print $1')"
   flags="$(
     echo "$status" | awk 'BEGIN {r=""} \
-      /^# Changes to be committed:$/        {r=r "+"}\
-      /^# Changes not staged for commit:$/  {r=r "!"}\
-      /^# Untracked files:$/                {r=r "?"}\
+      /^Changes to be committed:$/        {r=r "+"}\
+      /^Changes not staged for commit:$/  {r=r "!"}\
+      /^Untracked files:$/                {r=r "?"}\
       END {print r}'
   )"
   if [[ "$flags" ]]; then
