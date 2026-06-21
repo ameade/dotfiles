@@ -1,32 +1,20 @@
-# Ubuntu-only stuff. Abort if not Ubuntu.
-[[ "$(cat /etc/issue 2> /dev/null)" =~ Ubuntu ]] || return 1
+# Debian/Ubuntu setup. Abort if apt isn't available (e.g. macOS).
+command -v apt-get &>/dev/null || return 0
 
-e_header "Skipping Updating APT"
-#NOTE(ameade): LOL I don't want to wait so long
-# Update APT.
-#e_header "Updating APT"
+e_header "Updating apt package lists"
 sudo apt-get -qq update
-#sudo apt-get -qq upgrade
 
-# Install APT packages.
-packages=(
-  build-essential libssl-dev
-  cmake python3-dev
-  git-core
-  tree
-  ansible
-)
+# A small set of genuinely useful command-line tools. Add your own here.
+packages=(git tree ripgrep fzf bash-completion htop)
 
-list=()
-for package in "${packages[@]}"; do
-  if [[ ! "$(dpkg -l "$package" 2>/dev/null | grep "^ii  $package")" ]]; then
-    list=("${list[@]}" "$package")
-  fi
+to_install=()
+for pkg in "${packages[@]}"; do
+  dpkg-query -W -f='${Status}' "$pkg" 2>/dev/null | grep -q "install ok installed" || to_install+=("$pkg")
 done
 
-if (( ${#list[@]} > 0 )); then
-  e_header "Installing APT packages: ${list[*]}"
-  for package in "${list[@]}"; do
-    sudo apt-get -qq install "$package"
-  done
+if (( ${#to_install[@]} )); then
+  e_header "Installing apt packages: ${to_install[*]}"
+  sudo apt-get -qq install -y "${to_install[@]}"
+else
+  e_success "apt packages already installed."
 fi

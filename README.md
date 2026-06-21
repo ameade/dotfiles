@@ -1,139 +1,85 @@
 # Dotfiles
 
-My OS X / Ubuntu dotfiles.
+My macOS / Ubuntu dotfiles — bash config, aliases, a fancy prompt, and a few
+small scripts. Focused on configuration, not installing a pile of software.
 
-## Why is this a git repo?
+Originally based on [Ben "Cowboy" Alman's dotfiles framework][cowboy], trimmed
+down and modernized.
 
-I've been using bash on-and-off for a long time (since Slackware Linux was distributed on 1.44MB floppy disks). In all that time, every time I've set up a new Linux or OS X machine, I've copied over my `.bashrc` file and my `~/bin` folder to each machine manually. And I've never done a very good job of actually maintaining these files. It's been a total mess.
+[cowboy]: https://github.com/cowboy/dotfiles
 
-I finally decided that I wanted to be able to execute a single command to "bootstrap" a new system to pull down all of my dotfiles and configs, as well as install all the tools I commonly use. In addition, I wanted to be able to re-execute that command at any time to synchronize anything that might have changed. Finally, I wanted to make it easy to re-integrate changes back in, so that other machines could be updated.
+## Install
 
-That command is [~/bin/dotfiles][dotfiles], and this is my "dotfiles" Git repo.
-
-[dotfiles]: https://github.com/cowboy/dotfiles/blob/master/bin/dotfiles
-[bin]: https://github.com/cowboy/dotfiles/tree/master/bin
-
-## What, exactly, does the "dotfiles" command do?
-
-It's really not very complicated. When [dotfiles][dotfiles] is run, it does a few things:
-
-1. Git is installed if necessary, via APT or Homebrew (which is installed if necessary).
-2. This repo is cloned into the `~/.dotfiles` directory (or updated if it already exists).
-2. Files in `init` are executed (in alphanumeric order).
-3. Files in `copy` are copied into `~/`.
-4. Files in `link` are linked into `~/`.
-
-Note:
-
-* The `backups` folder only gets created when necessary. Any files in `~/` that would have been overwritten by `copy` or `link` get backed up there.
-* Files in `bin` are executable shell scripts ([~/.dotfiles/bin][bin] is added into the path).
-* Files in `source` get sourced whenever a new shell is opened (in alphanumeric order)..
-* Files in `conf` just sit there. If a config file doesn't _need_ to go in `~/`, put it in there.
-* Files in `caches` are cached files, only used by some scripts. This folder will only be created if necessary.
-
-## Installation
-### OS X
-Notes:
-
-* You need to be an administrator (for `sudo`).
-* You need to have installed [XCode Command Line Tools](https://developer.apple.com/downloads/index.action?=command%20line%20tools), which are available as a separate, optional (and _much smaller_) download from XCode.
+One command bootstraps a fresh machine — clone the repo into `~/.dotfiles`,
+install a handful of CLI tools, and link everything into `~/`:
 
 ```sh
-bash -c "$(curl -fsSL https://raw.github.com/cowboy/dotfiles/master/bin/dotfiles)" && source ~/.bashrc
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/ameade/dotfiles/my_files/bin/dotfiles)" && source ~/.bashrc
 ```
 
-### Ubuntu
-Notes:
+Requirements:
+- **macOS**: Xcode Command Line Tools (`xcode-select --install`). Homebrew is
+  installed automatically if missing.
+- **Ubuntu/Debian**: an account with `sudo` for `apt`.
 
-* You need to be an administrator (for `sudo`).
-* If APT hasn't been updated or upgraded recently, it will probably be a few minutes before you see anything.
+Re-run any time to pull updates and re-link:
 
 ```sh
-sudo apt-get -qq update && sudo apt-get -qq upgrade && sudo apt-get -qq install curl && echo &&
-bash -c "$(curl -fsSL https://raw.github.com/cowboy/dotfiles/master/bin/dotfiles)" && source ~/.bashrc
+dotfiles
 ```
 
-## The "init" step
-These things will be installed, but _only_ if they aren't already.
+## What the `dotfiles` command does
 
-### OS X
-* Homebrew
-  * git
-  * tree
-  * sl
-  * lesspipe
-  * id3tool
-  * nmap
-  * git-extras
-  * htop-osx
-  * apple-gcc42 (via [homebrew-dupes](https://github.com/Homebrew/homebrew-dupes/blob/master/apple-gcc42.rb))
+1. Clones `~/.dotfiles` (or `git pull`s if it already exists).
+2. Runs `init/*.sh` — installs a short list of essential CLI tools
+   (`git tree ripgrep fzf bash-completion htop`) via Homebrew or apt. Already
+   installed? It does nothing.
+3. Copies `copy/*` into `~/` (files you'll edit locally, like `.gitconfig`).
+4. Symlinks `link/*` into `~/` (edit these and you edit the repo).
 
-### Ubuntu
-* APT
-  * build-essential
-  * libssl-dev
-  * git-core
-  * tree
-  * sl
-  * id3tool
-  * nmap
-  * telnet
-  * htop
+Anything in `~/` that would be overwritten is moved to `~/.dotfiles/backups/`.
 
-### Both
-* Nave
-  * Npm (latest stable)
-    * Grunt
-    * JSHint
-    * Uglify-JS
-* Rbenv
-  * Ruby 1.9.3-p194 (default)
-  * Ruby 1.9.2-p290 (default)
-* Ruby Gems
-  * bundler
-  * awesome_print
-  * interactive_editor
+## Layout
 
-## The ~/ "copy" step
-Any file in the `copy` subdirectory will be copied into `~/`. Any file that _needs_ to be modified with personal information (like [.gitconfig](https://github.com/cowboy/dotfiles/blob/master/copy/.gitconfig) which contains an email address and private key) should be _copied_ into `~/`. Because the file you'll be editing is no longer in `~/.dotfiles`, it's less likely to be accidentally committed into your public dotfiles repo.
+| Dir       | Purpose                                                             |
+|-----------|---------------------------------------------------------------------|
+| `bin/`    | Scripts added to `$PATH` (`serve`, `eachdir`, `isip`, `ssid`, `pid`)|
+| `init/`   | Per-OS setup, run once per `dotfiles` invocation                    |
+| `copy/`   | Copied into `~/` (edit the copy, not the repo)                      |
+| `link/`   | Symlinked into `~/` (`.bashrc`, `.bash_profile`, `.tmux.conf`, …)   |
+| `source/` | Sourced by `~/.bashrc` on every new shell (aliases, prompt, etc.)   |
+| `conf/`   | Config that just sits here; not auto-applied                        |
 
-## The ~/ "link" step
-Any file in the `link` subdirectory gets symbolically linked with `ln -s` into `~/`. Edit these, and you change the file in the repo. Don't link files containing sensitive data, or you might accidentally commit that data!
+## Aliases & functions
 
-## Aliases and Functions
-To keep things easy, the `~/.bashrc` and `~/.bash_profile` files are extremely simple, and should never need to be modified. Instead, add your aliases, functions, settings, etc into one of the files in the `source` subdirectory, or add a new file. They're all automatically sourced when a new shell is opened. Take a look, I have [a lot of aliases and functions](https://github.com/cowboy/dotfiles/tree/master/source). I even have a [fancy prompt](https://github.com/cowboy/dotfiles/blob/master/source/50_prompt.sh) that shows the current directory, time and current git/svn repo status.
+`~/.bashrc` and `~/.bash_profile` stay tiny and shouldn't need editing. Put
+aliases, functions, and settings in a file under `source/` — everything there
+is sourced automatically on a new shell. Re-source without opening a new shell:
 
-## Scripts
-In addition to the aforementioned [dotfiles][dotfiles] script, there are a few other [bash scripts][bin]. This includes [ack](https://github.com/petdance/ack), which is a [git submodule](https://github.com/cowboy/dotfiles/tree/master/libs).
+```sh
+src          # re-source everything
+src 50_misc  # re-source one file (by name, no .sh)
+```
 
-* [dotfiles][dotfiles] - (re)initialize dotfiles. It might ask for your password (for `sudo`).
-* [src](https://github.com/cowboy/dotfiles/blob/master/link/.bashrc#L6-15) - (re)source all files in `source` directory
-* Look through the [bin][bin] subdirectory for a few more.
+## Secrets & machine-specific config
+
+**Never commit secrets.** API tokens, work-specific paths, and per-machine
+`PATH` tweaks go in gitignored local files that load automatically if present:
+
+- `~/.bashrc.local` — interactive shell (sourced from `.bashrc`)
+- `~/.bash_profile.local` — login shell (sourced from `.bash_profile`)
+- `source/*.local.sh` — also sourced, also gitignored
 
 ## Prompt
-I think [my bash prompt](https://github.com/cowboy/dotfiles/blob/master/source/50_prompt.sh) is awesome. It shows git and svn repo status, a timestamp, error exit codes, and even changes color depending on how you've logged in.
 
-Git repos display as **[branch:flags]** where flags are:
+The prompt shows git repo status, a timestamp, and the previous command's exit
+code, and changes color over SSH or as root. Git repos display as
+**[branch:flags]**:
 
-**?** untracked files  
-**!** changed (but unstaged) files  
-**+** staged files
-
-SVN repos display as **[rev1:rev2]** where rev1 and rev2 are:
-
-**rev1** last changed revision  
-**rev2** revision
-
-Check it out:
-
-![My awesome bash prompt](http://farm8.staticflickr.com/7142/6754488927_563dd73553_b.jpg)
-
-## Inspiration
-<https://github.com/gf3/dotfiles>  
-<https://github.com/mathiasbynens/dotfiles>  
-(and 15+ years of accumulated crap)
+- **?** untracked files
+- **!** changed (unstaged) files
+- **+** staged files
 
 ## License
-Copyright (c) 2012 "Cowboy" Ben Alman  
-Licensed under the MIT license.  
-<http://benalman.com/about/license/>
+
+Framework © 2012 "Cowboy" Ben Alman, MIT licensed. Personal config © Alex Meade.

@@ -1,12 +1,17 @@
-# This file is sourced at the end of a first-time dotfiles install.
-shopt -s expand_aliases
-source ~/.bashrc
-
-# I'm forgetful. Just look at this repo's commits to see how many times I
-# forgot to setup Git and GitHub.
+# Sourced once, at the end of a first-time dotfiles install.
 
 cat <<EOF
-SSH Keys (if this is a server)
- 1. (main) scp ~/.ssh/id_rsa.pub $USER@$(wanip):~/.ssh/
- 2. (here) cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
+First-time setup reminders:
+
+  • Set up git identity if needed:
+      git config --global user.name  "Your Name"
+      git config --global user.email "you@example.com"
+    (defaults are in ~/.gitconfig — edit the copy, not the repo)
+
+  • Generate an SSH key if this machine needs one:
+      ssh-keygen -t ed25519 -C "$USER@$(hostname)"
+      cat ~/.ssh/id_ed25519.pub   # add to GitHub / authorized_keys
+
+  • Put any secrets or machine-specific config (API tokens, work paths) in:
+      ~/.bashrc.local         (gitignored, never committed)
 EOF

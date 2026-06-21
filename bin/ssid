@@ -1,26 +1,26 @@
 #!/bin/bash
 
 if [[ "$1" == "-h" || "$1" == "--help" ]]; then cat <<HELP
-Get WiFi SSID
-http://benalman.com/
+Get the current WiFi SSID (macOS).
 
-Usage: $(basename "$0")
+Usage: $(basename "$0") [SSID]
 
-If an SSID is specified and it is the current WiFi network's SSID, echo it,
-otherwise echo nothing.
-
-Copyright (c) 2012 "Cowboy" Ben Alman
-Licensed under the MIT license.
-http://benalman.com/about/license/
+With no argument, echo the current WiFi network's SSID. If an SSID is given,
+echo it only when it matches the currently-connected network.
 HELP
 exit; fi
 
-ssid=$(/System/Library/PrivateFrameworks/Apple80211.framework/Versions/A/Resources/airport -I | grep " SSID" | sed "s/.*: //")
+# The legacy 'airport -I' was removed in macOS 14.4; use system_profiler.
+ssid=$(system_profiler SPAirPortDataType 2>/dev/null \
+  | awk '/Current Network Information:/{getline; gsub(/^ +| +:$/,""); print; exit}')
 
-if [ "$1" ]; then
-  if [ "$(echo $ssid | grep -w $1)" ]; then
-    echo $1
-  fi
+# Fallback for older macOS where networksetup reports the active SSID.
+if [[ -z "$ssid" ]]; then
+  ssid=$(networksetup -getairportnetwork en0 2>/dev/null | sed 's/^Current Wi-Fi Network: //')
+fi
+
+if [[ "$1" ]]; then
+  [[ "$ssid" == "$1" ]] && echo "$1"
 else
-  echo $ssid
+  echo "$ssid"
 fi

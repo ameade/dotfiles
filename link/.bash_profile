@@ -1,11 +1,11 @@
+# For login shells: load .bashrc so interactive config applies everywhere.
 if [ -f ~/.bashrc ]; then
   source ~/.bashrc
 fi
-export PATH="/usr/local/opt/openssl@1.1/bin:$PATH"
 
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/ameade/google-cloud-sdk/path.bash.inc' ]; then . '/Users/ameade/google-cloud-sdk/path.bash.inc'; fi
+# Google Cloud SDK (only if installed, relative to $HOME).
+if [ -f "$HOME/google-cloud-sdk/path.bash.inc" ]; then source "$HOME/google-cloud-sdk/path.bash.inc"; fi
+if [ -f "$HOME/google-cloud-sdk/completion.bash.inc" ]; then source "$HOME/google-cloud-sdk/completion.bash.inc"; fi
 
-# The next line enables shell command completion for gcloud.
-if [ -f '/Users/ameade/google-cloud-sdk/completion.bash.inc' ]; then source '/Users/ameade/google-cloud-sdk/completion.bash.inc'; fi
-export PATH="/usr/local/opt/openjdk/bin:$PATH"
+# Machine-specific login-shell config (PATH for brew kegs, JDKs, etc.).
+[[ -f ~/.bash_profile.local ]] && source ~/.bash_profile.local

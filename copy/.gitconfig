@@ -8,9 +8,12 @@
   excludesfile = ~/.gitignore_global
 [apply]
   whitespace = fix
+[init]
+  defaultBranch = main
+[pull]
+  ff = only
 [alias]
-  review = !sh `git rev-parse --show-toplevel`/tools/rfc.sh
-  #This deletes all branches that have been merged into the current branch
+  # Delete local branches already merged into the current branch.
   bc = !sh -c \"git branch --merged | grep -v \\\"\\*\\\" | xargs -n 1 git branch -d\"
   br = branch
   ci = commit
@@ -19,15 +22,7 @@
   g = grep -I
   lg = log -p
   pp = !"echo 'Pull'; git pull; echo 'Push'; git push"
-  rb = rbranch
-  rv = review
   st = status
-[branch "master"]
-  remote = origin
-  merge = refs/heads/master
-[branch "my_files"]
-  remote = origin
-  merge = refs/heads/my_files
 [color]
   ui = auto
 [color "branch"]

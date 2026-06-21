@@ -1,7 +1,16 @@
 caches/
 backups/
+__pycache__/
+
+# Secrets / machine-specific config — never commit these.
+*.local
+.bashrc.local
+.bash_profile.local
+source/*.local.sh
+
+# SSH material, in case anyone drops keys under link/.ssh
 link/.ssh/authorized_keys
 link/.ssh/id_*
 link/.ssh/known_hosts
-link/.vim/.netrwhist
+
 *LOCAL*

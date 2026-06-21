@@ -1,5 +1,5 @@
-# Ubuntu-only stuff. Abort if not Ubuntu.
-[[ "$(cat /etc/issue 2> /dev/null)" =~ Ubuntu ]] || return 1
+# Debian/Ubuntu-only aliases. Abort if apt isn't available.
+command -v apt-get &>/dev/null || return 0
 
 # Package management
 alias update="sudo apt-get -qq update && sudo apt-get upgrade"
